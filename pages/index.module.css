@@ -1,0 +1,19 @@
+.heading {
+  text-align: center;
+  margin: 0;
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 44px;
+
+  @media (min-width: 768px) {
+    font-size: 64px;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
