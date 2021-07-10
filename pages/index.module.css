@@ -1,8 +1,8 @@
 .heading {
   text-align: center;
   margin: 0;
-  font-family: "Inter";
-  font-weight: 700;
+  font-family: "Libre Franklin";
+  font-weight: 500;
   font-size: 44px;
 
   @media (min-width: 768px) {
