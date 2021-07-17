@@ -1,1 +1,1 @@
-A web page with links
+Personal landing page w/ Next.js, rehype, framer-motion
