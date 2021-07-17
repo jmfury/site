@@ -3,6 +3,7 @@ import SvgRender from "../components/svg-render"
 import fs from "fs"
 import parseSvg from "../lib/parse-svg"
 import s from "./index.module.css"
+import { MotionSvgContextProvider } from "../components/motion-components/context"
 
 export default function Page({ ast }) {
   if (!ast) return <div>Hi</div>
@@ -15,7 +16,45 @@ export default function Page({ ast }) {
       ]}
     >
       <section className={s.content}>
-        <SvgRender ast={ast} />
+        <MotionSvgContextProvider
+          value={{
+            polygon: {
+              initial: "initial",
+              animate: "animate",
+              transition: {
+                duration: 2.4,
+                repeatType: "reverse",
+                repeat: Infinity,
+                repeatDelay: 1,
+              },
+              variants: {
+                initial: {
+                  opacity: 0,
+                  clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0 100%)",
+                },
+                animate: {
+                  opacity: 0.55,
+                  clipPath: "polygon(0% 0%, 100% 1%, 100% 100%, 0 100%)",
+                },
+              },
+            },
+            g: {
+              initial: "initial",
+              animate: "animate",
+              variants: {
+                animate: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.5,
+                  },
+                },
+              },
+            },
+          }}
+        >
+          <SvgRender ast={ast} />
+        </MotionSvgContextProvider>
+
         <h1 className={s.heading}>Jimmy Merritello</h1>
       </section>
     </MainLayout>
