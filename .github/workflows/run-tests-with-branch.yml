@@ -21,9 +21,9 @@ jobs:
                             owner,
                             repo,
                             commit_sha: DEPLOYMENT_SHA
-                          });
+                          });                      
             return branches.data[0].name
           result-encoding: string
       - name: Run tests
-        if: github.event.deployment.production_environment || github.event.deployment.production_environment == false && steps.get-branch-name-by-head.outputs.result != 'main'
-        run: echo "Branch ${{steps.get-branch-name-by-head.outputs.result}} Production ${{ github.event.deployment.production_environment }}"
+        if: github.event.deployment.environment == 'Production' || github.event.deployment.Production == 'Preview' && steps.get-branch-name-by-head.outputs.result != 'main'
+        run: echo "Branch ${{steps.get-branch-name-by-head.outputs.result}} VERCEL_ENVIRONMENT ${{ github.event.deployment.environment }}"
