@@ -1,0 +1,29 @@
+name: Test Deployment with Branch
+on: deployment_status
+
+jobs:
+  print:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/github-script@v6
+        id: get-branch-name-by-head
+        env:
+          DEPLOYMENT_SHA: "${{ github.event.deployment.sha }}"
+        with:
+          script: |
+            const { DEPLOYMENT_SHA } = process.env
+            const owner = 'jmfury'
+            const repo = 'site'
+            const branches = await github.rest.repos.listBranchesForHeadCommit({
+                            owner,
+                            repo,
+                            commit_sha: DEPLOYMENT_SHA
+                          });
+            return branches.data[0].name
+          result-encoding: string
+      - name: Run tests
+        if: github.event.deployment.production_environment || github.event.deployment.production_environment == false && steps.get-branch-name-by-head.outputs.result != 'main'
+        run: echo "Branch ${{steps.get-branch-name-by-head.outputs.result}} Production ${{ github.event.deployment.production_environment }}"
