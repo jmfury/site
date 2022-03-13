@@ -21,7 +21,8 @@ jobs:
                             owner,
                             repo,
                             commit_sha: DEPLOYMENT_SHA
-                          });                      
+                          });         
+             console.log({ branch: branches.data[0].name })                          
             return branches.data[0].name
           result-encoding: string
       - name: Run tests
